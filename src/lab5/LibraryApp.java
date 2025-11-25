@@ -9,15 +9,19 @@ public class LibraryApp {
 	// Some functions for the Assignment
 	private static void addMember(String name) {
 		librarian.addMember(name);
+		System.out.println(name + " has been added to the members list.");
 	}	
 	private static void addBook(String title) {
 		librarian.addBook(title);
+		System.out.println("Adding " + title + " to the library.");
 	}
 	private static void borrowBook(String title, String name) {
 		librarian.borrowBookByMember(title, name);
+		System.out.println(name + " is borrowing " + title + ".");
 	}
 	private static void returnBook(String title, String name) {
 		librarian.returnBookByMember(title, name);
+		System.out.println(name + " is returning " + title + ".");
 	}
 		
 	public static void main(String[] args) {
@@ -25,32 +29,41 @@ public class LibraryApp {
 		System.out.println(" *** Library management system demo *** ");
 		
 	    // Adding one book, see the Sequence diagram in the lab document.
-		addBook("Dune");
+		addBook("Test");
 		
 		// TODO: Create three sequence diagrams for each of these method calls 
 		addMember("Alice"); 			// 1. Add a member
-		borrowBook("Dune", "Alice");  	// 2. Borrow a book
-		returnBook("Dune", "Alice"); 	// 3. Return book		
+		borrowBook("Test", "Alice");  	// 2. Borrow a book
+		returnBook("Test", "Alice"); 	// 3. Return book		
+		librarian.removeBook("Test");
+		librarian.removeMember("Alice");
 		 
 	    // Adding some books to the catalog
 		System.out.println("\n *** Adding books to the library:");
 		librarian.addBook("Dune");
 		librarian.addBook("1984");
 		librarian.addBook("Moby Dick");
+		librarian.addEBook("LOTR");
+		librarian.addAudioBook("The Hobbit");
+		librarian.showBooks();
 		
 		// Adding members to the library
 		System.out.println("\n *** Adding members to the library:");
 		librarian.addMember("Alice");
 		librarian.addMember("Bob");
+		librarian.showMembers();
 		
 		librarian.borrowBookByMember("Dune", "Alice");
 		librarian.borrowBookByMember("1984", "Alice");
+		librarian.borrowBookByMember("LOTR", "Alice");
 		librarian.borrowBookByMember("Moby Dick", "Bob");
+		librarian.borrowBookByMember("The Hobbit", "Bob");
 		librarian.borrowBookByMember("Dune", "Bob"); // will be rejected
 		
 		System.out.println("\n *** Books borrowed by Alice:");
 		librarian.showMemberBooks("Alice");
 		
+		System.out.println("\n *** Books borrowed by Bob:");
 		librarian.showMemberBooks("Bob");
 		
 		System.out.println("\n *** Book returned by Alice: Dune");
