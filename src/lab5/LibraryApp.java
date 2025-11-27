@@ -9,19 +9,15 @@ public class LibraryApp {
 	// Some functions for the Assignment
 	private static void addMember(String name) {
 		librarian.addMember(name);
-		System.out.println(name + " has been added to the members list.");
 	}	
 	private static void addBook(String title) {
 		librarian.addBook(title);
-		System.out.println("Adding " + title + " to the library.");
 	}
 	private static void borrowBook(String title, String name) {
 		librarian.borrowBookByMember(title, name);
-		System.out.println(name + " is borrowing " + title + ".");
 	}
 	private static void returnBook(String title, String name) {
 		librarian.returnBookByMember(title, name);
-		System.out.println(name + " is returning " + title + ".");
 	}
 		
 	public static void main(String[] args) {
