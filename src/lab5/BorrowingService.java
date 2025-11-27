@@ -3,46 +3,59 @@ package lab5;
 import java.util.List;
 
 public class BorrowingService implements BorrowingServiceAPI {
-	
+
 	@Override
-	public boolean borrowBook(Member member, Book book) {
+	public BorrowingBookResult borrowBook(Member member, Book book) {
+		BorrowingBookResult result = new BorrowingBookResult();
 		if (member == null || book == null) {
-			return false;
+			result.setBorrowingMessage("Member or book doesn't exist.");
+			result.isSuccess(false);
+			return result;
 		}
-		
+		if (member.getBorrowedBooks().contains(book)) {
+			result.setBorrowingMessage(member.getName() + " already has this book.");
+			result.isSuccess(false);
+			return result;
+		}
+		if (!book.getIsAvailable()) {
+			result.setBorrowingMessage("This book is unavailable.");
+			result.isSuccess(false);
+			return result;
+		}
+		if (member.borrowedBooksCount() >= 3) {
+			result.isSuccess(false);
+			result.setBorrowingMessage(member.getName() + " already has 3 books.");
+			return result;
+		}
+
 		List<Book> borrowed = member.getBorrowedBooks();
-		
-		if(borrowed.contains(book)) {
-			System.out.println(member.getName() + " already borrowed: " + book.getTitle());
-			return false;
-		}
-		
-		if(!book.getIsAvailable()) {
-			System.out.println("Book is not available: " + book.getTitle());
-			return false;
-		}
-		
-        borrowed.add(book);
-        book.setIsAvailable(false);
-        System.out.println(member.getName() + " borrowed: " + book.getTitle());
-        return true;
-		
+		borrowed.add(book);
+		book.setIsAvailable(false);
+		result.isSuccess(true);
+		result.setBorrowingMessage(member.getName() + " borrowed: " + book.getTitle() + ".");
+		return result;
+
 	}
 
 	@Override
-    public boolean returnBook(Member member, Book book) {
+	public BorrowingBookResult returnBook(Member member, Book book) {
+		BorrowingBookResult result = new BorrowingBookResult();
 		if (member == null || book == null) {
-			return false;
+			return result;
 		}
-		
+
 		List<Book> borrowed = member.getBorrowedBooks();
-		
+
 		if (!borrowed.contains(book)) {
-			return false;
+			result.setBorrowingMessage(member.getName() + " doesn't have this book.");
+			result.isSuccess(false);
+			return result;
 		}
-		
+
+		result.isSuccess(true);
 		borrowed.remove(book);
+		result.setBorrowingMessage(member.getName() + " has returned " + book.getTitle() + ".");
 		book.setIsAvailable(true);
-		return true;
+		return result;
 	}
 }

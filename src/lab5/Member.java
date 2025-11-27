@@ -31,22 +31,14 @@ public class Member {
 
 	public void borrowBook(Book book) {
 		BorrowingService borrowingService = new BorrowingService();
-		boolean result = borrowingService.borrowBook(this, book);
-		if (result) {
-			System.out.println(this.name + " has successfully borrowed: " + book.getTitle());
-		} else {
-			System.out.println(this.name + " failed to borrow: " + book.getTitle());
-		}
+		BorrowingBookResult result = borrowingService.borrowBook(this, book);
+		System.out.println("Success: " + result.getIsSuccess() + " : " + result.getBorrowingMessage());
 	}
 
 	public void returnBook(Book book) {
 		BorrowingService borrowingService = new BorrowingService();
-		boolean result = borrowingService.returnBook(this, book);
-		if (result) {
-			System.out.println(this.name + " has successfully returned: " + book.getTitle());
-		} else {
-			System.out.println(this.name + " failed to return: " + book.getTitle());
-		}
+		BorrowingBookResult result = borrowingService.returnBook(this, book);
+		System.out.println("Success: " + result.getIsSuccess() + " : " + result.getBorrowingMessage());
 	}
 
 	public void listBorrowedBooks() {
