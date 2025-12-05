@@ -41,6 +41,8 @@ public class BorrowingService implements BorrowingServiceAPI {
 	public BorrowingBookResult returnBook(Member member, Book book) {
 		BorrowingBookResult result = new BorrowingBookResult();
 		if (member == null || book == null) {
+			result.isSuccess(false);
+			result.setBorrowingMessage("Member or book is invalid.");
 			return result;
 		}
 
