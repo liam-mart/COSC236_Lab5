@@ -13,8 +13,8 @@ public class BorrowingServiceTest {
 
     @Test
     void borrowBook_success_whenAvailableAndUnderLimit() {
-        BorrowingService service = new BorrowingService();
-        Member alice = new Member("Alice");
+        BorrowingService service = BorrowingService.getInstance();
+        Member alice = new Member("Alice", service);
         Book dune = new PaperBook("Dune");
 
         BorrowingBookResult result = service.borrowBook(alice, dune);
@@ -26,8 +26,8 @@ public class BorrowingServiceTest {
 
     @Test
     void borrowBook_fails_whenSameBookBorrowedTwiceBySameMember() {
-        BorrowingService service = new BorrowingService();
-        Member alice = new Member("Alice");
+        BorrowingService service = BorrowingService.getInstance();
+        Member alice = new Member("Alice", service);
         Book dune = new PaperBook("Dune");
 
         BorrowingBookResult first = service.borrowBook(alice, dune);
@@ -41,9 +41,9 @@ public class BorrowingServiceTest {
 
     @Test
     void borrowBook_fails_whenBookAlreadyBorrowedByAnotherMember() {
-        BorrowingService service = new BorrowingService();
-        Member alice = new Member("Alice");
-        Member bob = new Member("Bob");
+        BorrowingService service = BorrowingService.getInstance();
+        Member alice = new Member("Alice", service);
+        Member bob = new Member("Bob", service);
         Book dune = new PaperBook("Dune");
 
         BorrowingBookResult aliceResult = service.borrowBook(alice, dune);
@@ -57,8 +57,8 @@ public class BorrowingServiceTest {
 
     @Test
     void borrowBook_fails_whenMemberAlreadyHasThreeBooks() {
-        BorrowingService service = new BorrowingService();
-        Member alice = new Member("Alice");
+        BorrowingService service = BorrowingService.getInstance();
+        Member alice = new Member("Alice", service);
 
         Book b1 = new PaperBook("Book 1");
         Book b2 = new PaperBook("Book 2");
@@ -77,8 +77,8 @@ public class BorrowingServiceTest {
 
     @Test
     void returnBook_success_whenMemberHasBook() {
-        BorrowingService service = new BorrowingService();
-        Member alice = new Member("Alice");
+        BorrowingService service = BorrowingService.getInstance();
+        Member alice = new Member("Alice", service);
         Book dune = new PaperBook("Dune");
 
         service.borrowBook(alice, dune);
@@ -91,8 +91,8 @@ public class BorrowingServiceTest {
 
     @Test
     void returnBook_fails_whenMemberNeverBorrowedBook() {
-        BorrowingService service = new BorrowingService();
-        Member alice = new Member("Alice");
+        BorrowingService service = BorrowingService.getInstance();
+        Member alice = new Member("Alice", service);
         Book dune = new PaperBook("Dune");
 
         BorrowingBookResult result = service.returnBook(alice, dune);

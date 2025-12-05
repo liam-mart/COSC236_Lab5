@@ -4,6 +4,15 @@ import java.util.List;
 
 public class BorrowingService implements BorrowingServiceAPI {
 
+	private static final BorrowingService INSTANCE = new BorrowingService();
+
+	private BorrowingService() {
+	}
+
+	public static BorrowingService getInstance() {
+		return INSTANCE;
+	}
+
 	@Override
 	public BorrowingBookResult borrowBook(Member member, Book book) {
 		BorrowingBookResult result = new BorrowingBookResult();

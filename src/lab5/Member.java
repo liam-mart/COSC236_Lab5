@@ -8,9 +8,12 @@ public class Member {
 	private String name;
 	private ArrayList<Book> borrowedBooks; // Book class dependency
 
-	public Member(String name) {
+	private BorrowingServiceAPI borrowingService;
+
+	public Member(String name, BorrowingServiceAPI borrowingService) {
 		this.name = name;
 		this.borrowedBooks = new ArrayList<>();
+		this.borrowingService = borrowingService;
 	}
 
 	public String getName() {
@@ -30,13 +33,12 @@ public class Member {
 	}
 
 	public void borrowBook(Book book) {
-		BorrowingService borrowingService = new BorrowingService();
 		BorrowingBookResult result = borrowingService.borrowBook(this, book);
 		System.out.println("Success: " + result.getIsSuccess() + " : " + result.getBorrowingMessage());
 	}
 
 	public void returnBook(Book book) {
-		BorrowingService borrowingService = new BorrowingService();
+		borrowingService.returnBook(this, book);
 		BorrowingBookResult result = borrowingService.returnBook(this, book);
 		System.out.println("Success: " + result.getIsSuccess() + " : " + result.getBorrowingMessage());
 	}
